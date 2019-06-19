@@ -1,0 +1,160 @@
+<html>
+  <body>
+    <div class="main" >
+        <caption> <h1>Store</h1> </caption>   
+    <div class="left">
+    <table>
+      <caption> Catalog </caption>
+      <tr *ngFor="let item of items">
+        <td> {{item.product}} <br> Rs {{item.price}} <button (click)="add(item)">Add to Cart</button></td>
+      </tr>
+      </table>
+      </div>
+      <div class="right">
+          <table>
+            <caption> Cart </caption>
+            <tr *ngFor="let item of cart;let i=index">
+              <td> item: {{item.product}} <br>Rs-{{item.price}}<button (click)="remove(i,item)"> Remove </button></td>
+            </tr>
+          </table><br>
+          <table class="ta">
+              <caption> Checkout </caption>
+              <tr>
+                <td> OrderTotal:Rs:{{n}} <br>
+                <button (click) ="place($event)"> PlaceOrder </button></td>
+              </tr>
+          </table>
+      </div>
+    </div>
+    </body>
+  </html>
+
+
+
+
+
+import { Component } from '@angular/core';
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+
+product:string;
+price:number;
+n:number=0;
+items=[{'product':'Nike Shoes','price':100},
+{'product':'Blue saree','price':400},{'product':'levia zeans','price':150},{'product':'Arrow shirt','price':250}];
+cart=[];
+add(item){
+  this.cart.push(item);
+  this.n+=item.price;
+}
+remove(i,item){
+  this.cart.splice(i,1);
+  this.n-=item.price;
+}
+place(){
+  if(this.n!=0)
+  {
+    alert("order is placed");
+  }  
+}
+}
+
+
+
+
+
+<html>
+  <body>
+    <div class="H">
+      <span>BookMyShow<br><span>Logo</span></span>
+      <span> Header </span>     
+    </div>
+
+    <div class="main">
+
+      <div class="left">
+        <table>
+          <caption> <b>Movies</b> </caption>
+        <tr> <td></td> </tr>
+        <!--<tr> <td> Bahubali 2 &nbsp;&nbsp;&nbsp; <button> Select</button></td> </tr>
+        <tr> <td>Adhurs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button> Select</button></td> </tr>
+        <tr> <td> Jai lavakusa &nbsp;&nbsp;<button> Select</button></td> </tr>-->
+        <tr *ngFor="let show of movie;let i=index">
+            <td> {{movie[i]}} <button (click)="mov(i)">Select</button></td>
+        </tr>
+        <tr> <td></td> </tr>       
+        </table>
+      </div>
+
+      <div class="middle">
+        <table>
+          <caption> <b>Theatres</b> </caption>
+          <tr> <td></td> </tr>
+          <!--<tr> <td>Jagadamba &nbsp;&nbsp;&nbsp; <button> Book</button></td> </tr>
+          <tr> <td>Kinnera &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button> Book</button></td> </tr>
+          <tr> <td>Melody &nbsp;&nbsp;&nbsp;&nbsp;<button> Book</button></td> </tr>-->
+          <tr *ngFor="let show of theater;let i=index">
+              <td> {{theater[i]}} <button (click)="thea(i)">Book</button></td>
+          </tr>
+          <tr> <td></td> </tr>
+        </table>
+      </div>
+
+      <div class="right">
+        <table>
+          <caption> <b>Book Now</b> </caption>
+          <tr> <td>How many tickets?<br><input type="number" [(ngModel)]="number" required><br>Mobile #<br><input type="text" required><br><br><button (click)="book($event)"> Book </button></td> </tr>
+        </table>
+      </div>
+
+      <div class="F">
+        <span> Footer </span>
+      </div>
+    <h1>result:</h1><br>
+    </div>
+    <table class="out">
+      <tr><th>movie</th><th>theater</th><th>No.of tickets</th></tr>
+      <tr *ngFor="let mov of sel">
+        <td>{{mov.movie}}</td>
+        <td>{{mov.theater}}</td>
+        <td>{{mov.nooftick}}</td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  //title = 'exercise8';
+  movie=['Bahubali 2','Adhurs','Jai lavakusa'];
+  theater=['Jagadamba','Kinnera','Melody'];
+  sel:object[]=[];
+  tick={};
+  number:number=0;
+
+  mov(i){
+    this.tick["movie"]=this.movie[i]; 
+  }
+  thea(i){
+    this.tick["theater"]=this.theater[i];
+  }
+  book(){
+    this.tick["nooftick"]=this.number;
+    this.sel.push(this.tick);
+    this.tick={};
+    if(this.number!=0)
+    {
+      alert("movie tickets booked");
+    } 
+  }
+}
